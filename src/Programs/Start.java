@@ -1,5 +1,6 @@
 package Programs;
 
+import Structure.Logger;
 import Structure.Program;
 
 import java.awt.*;
@@ -17,10 +18,10 @@ public class Start extends Program {
 
     @Override
     protected void _manager() {
-        System.out.println(" -- Starting the _manager Thread for " + getProgramName());
+        Logger.logMessage(" -- Starting the _manager Thread for " + getProgramName());
 
         new Thread(()-> {
-            System.out.println(" -- _manager Thread for " + getProgramName() + " started");
+            Logger.logMessage(" -- _manager Thread for " + getProgramName() + " started");
             while (!(isTerminated())) {
                 // If there is at least one KeyEvent and at least one MouseEvent ready for consumption
                 if (getKeyStream().hasNext() && getMouseStream().hasNext()) {
@@ -47,7 +48,7 @@ public class Start extends Program {
                 }
             }
 
-            System.out.println(" -- _manager Thread for " + getProgramName() + " ended");
+            Logger.logMessage(" -- _manager Thread for " + getProgramName() + " ended");
             terminate();
         }, "Structure." + getProgramName() + "._manager").start();
     }

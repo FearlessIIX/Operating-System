@@ -1,5 +1,6 @@
 package Control;
 
+import Structure.Logger;
 import Structure.Program;
 
 import java.awt.event.KeyEvent;
@@ -29,7 +30,7 @@ public class Keyboard implements KeyListener {
 
     private void setMonitor(Program monitor) {
         _monitor = monitor;
-        System.out.println(" -- Keyboard Monitor transferred to -> " + monitor.getProgramName());
+        Logger.logMessage(" -- Keyboard Monitor transferred to -> " + monitor.getProgramName());
     }
 
     @Override
@@ -38,7 +39,5 @@ public class Keyboard implements KeyListener {
     public void keyPressed(KeyEvent ignored) { }
 
     @Override
-    public void keyReleased(KeyEvent e) {
-        _monitor.getKeyStream().sendEvent(e);
-    }
+    public void keyReleased(KeyEvent e) { _monitor.getKeyStream().sendEvent(e); }
 }

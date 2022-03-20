@@ -41,7 +41,7 @@ public abstract class Program extends JPanel {
 
     /**
      * <strong>This is the base controller for all Programs</strong><br>
-     * In order for a Structure.Program to function it must implement this method and do the following
+     * In order for a Program to function it must implement this method and do the following
      * <ol>
      *     <li>Read Events from KeyStream and forward them to the extending Program</li>
      *     <li>Read Events from MouseStream and forward them to the extending Program</li>
@@ -52,8 +52,8 @@ public abstract class Program extends JPanel {
     protected abstract void _manager();
 
     /**
-     * Returns the Mutual Control.KeyStream for this Structure.Program
-     * @return The Structure.Program's Control.KeyStream
+     * Returns the Mutual KeyStream for this Program
+     * @return The Program's KeyStream
      */
     public synchronized KeyStream getKeyStream() { return _key_stream; }
 

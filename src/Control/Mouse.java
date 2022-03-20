@@ -1,5 +1,6 @@
 package Control;
 
+import Structure.Logger;
 import Structure.Program;
 
 import javax.swing.event.MouseInputAdapter;
@@ -29,7 +30,7 @@ public class Mouse extends MouseInputAdapter {
 
     private void setMonitor(Program monitor) {
         _monitor = monitor;
-        System.out.println(" -- Mouse Monitor transferred to -> " + monitor.getProgramName());
+        Logger.logMessage(" -- Mouse Monitor transferred to -> " + monitor.getProgramName());
     }
 
     @Override
@@ -38,7 +39,5 @@ public class Mouse extends MouseInputAdapter {
     public void mouseReleased(MouseEvent ignored) { }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
-        _monitor.getMouseStream().sendEvent(e);
-    }
+    public void mouseClicked(MouseEvent e) { _monitor.getMouseStream().sendEvent(e); }
 }
