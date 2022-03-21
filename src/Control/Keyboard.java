@@ -36,8 +36,12 @@ public class Keyboard implements KeyListener {
     @Override
     public void keyTyped(KeyEvent ignored) { }
     @Override
-    public void keyPressed(KeyEvent ignored) { }
+    public void keyPressed(KeyEvent ignored) {
+
+    }
 
     @Override
-    public void keyReleased(KeyEvent e) { _monitor.getKeyStream().sendEvent(e); }
+    public void keyReleased(KeyEvent e) {
+        new Thread(()->_monitor.getKeyStream().sendEvent(e)).start();
+    }
 }

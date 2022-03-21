@@ -39,5 +39,7 @@ public class Mouse extends MouseInputAdapter {
     public void mouseReleased(MouseEvent ignored) { }
 
     @Override
-    public void mouseClicked(MouseEvent e) { _monitor.getMouseStream().sendEvent(e); }
+    public void mouseClicked(MouseEvent e) {
+        new Thread(() -> _monitor.getMouseStream().sendEvent(e)).start();
+    }
 }

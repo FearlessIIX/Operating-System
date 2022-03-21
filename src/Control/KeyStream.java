@@ -28,5 +28,5 @@ public class KeyStream {
      * Stores an Event at the front of queue, making it ready for consumption
      * @param event The Event to queue
      */
-    public synchronized void sendEvent(KeyEvent event) { _stream.push(event); }
+    public void sendEvent(KeyEvent event) { _stream.push(event); }
 }
