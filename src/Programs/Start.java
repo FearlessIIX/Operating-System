@@ -23,8 +23,6 @@ public class Start extends Program {
         count++;
 
         lines.add("");
-
-        Logger.logMessage(ScreenLines.length+"");
     }
 
     @Override
@@ -68,10 +66,18 @@ public class Start extends Program {
                 int cursor = chars_past;
                 int line = draw_line;
                 try {
-                    Thread.sleep(100);
                     toggleCursor(true, cursor, line);
-                    Thread.sleep(100);
+                    for (int i = 0; i < 500; i++) {
+                        Thread.sleep(1);
+                        if (cursor != chars_past || line != draw_line) {
+                            toggleCursor(false, cursor, line);
+                            cursor = chars_past; line = draw_line;
+                            toggleCursor(true, cursor, line);
+                            i = 0;
+                        }
+                    }
                     toggleCursor(false, cursor, line);
+                    Thread.sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
