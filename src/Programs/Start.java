@@ -137,7 +137,7 @@ public class Start extends Program {
         if (code == 65535 && event.getKeyCode() == 45)
             if (modifiers.contains("Alt") && modifiers.contains("Ctrl"))
                 return true;
-
+        // Detection for Arrow Keys (Specifically left and right)
         if (code == 65535 && event.getKeyCode() == 37 || event.getKeyCode() == 39) {
             if (event.getKeyCode() == 39) {
                 if (lines.get(line_pointer-1).length() > char_pointer) char_pointer++;
@@ -151,22 +151,13 @@ public class Start extends Program {
         if (code == 8 && lines.size() >= line_pointer) {
             String current_line = lines.get(line_pointer -1);
             // If there are characters left in current line
-            if (current_line.length() > 0) {
-                doBackspace(current_line, line_pointer);
+            if (current_line.length() > 0 && char_pointer > 0) {
+                doBackspace(char_pointer, line_pointer);
 
                 // Gets rid of the Character at the end of the line, then moves the Character pointer back by one
                 lines.set(line_pointer -1, current_line.substring(0, current_line.length()-1));
                 char_pointer--;
-            }
-            else {
-                // If there is a line before this line
-                if (lines.size() - 1 > 0) {
-                    // Sets the line pointer back by one, then sets the Character pointer to the length of the new line
-                    line_pointer--;
-                    char_pointer = lines.get(line_pointer -1).length();
-
-                    lines.remove(line_pointer);
-                }
+                Logger.logMessage(char_pointer+": Backspaced");
             }
         }
 
@@ -185,6 +176,7 @@ public class Start extends Program {
             // Adds the Character to the end of the line, then sets the Character Pointer up by One
             String current_line = lines.get(line_pointer -1);
 
+            Logger.logMessage(char_pointer+": Insert Character");
             if (char_pointer == 0) lines.set(line_pointer-1, ch + current_line);
             else if (char_pointer == current_line.length()) lines.set(line_pointer -1, current_line + ch);
             else {
@@ -193,11 +185,8 @@ public class Start extends Program {
 
                 lines.set(line_pointer-1, pre + ch + post);
 
-                String copy_for_reason = lines.get(line_pointer-1);
                 for (int i = 0; i <= post.length(); i++) {
-
-                    doBackspace(copy_for_reason, line_pointer);
-                    copy_for_reason = copy_for_reason.substring(0, copy_for_reason.length()-1);
+                    doBackspace((pre.length() +1)+i, line_pointer);
                 }
             }
 
@@ -235,11 +224,11 @@ public class Start extends Program {
     //TODO: when we change this to allow in line backspacing, we should change str to base off of char pointer instead
     // when backspacing mid line we will get rid of all char past char pointer, then add concat substring of char
     // before pointer, and char one after pointer
-    private void doBackspace(String str, int line) {
+    private void doBackspace(int ch, int line) {
         Graphics g = getGraphics();
         g.setColor(Color.black);
 
-        g.fillRect(18*(str.length()-1), 30*(line-1), 18, 30);
+        g.fillRect(18*(ch-1), 30*(line-1), 18, 30);
     }
 
     /**
